@@ -1,0 +1,25 @@
+name: Download PDF with Curl
+
+on:
+  workflow_dispatch:  # Run manually
+
+jobs:
+  download-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download PDF using curl
+        run: |
+          curl -L -o report.pdf https://www.bseindia.com/xml-data/corpfiling/AttachLive/ead7a80d-6fbd-4dc1-9390-0432cee2299d.pdf
+          echo "Downloaded file:"
+          file report.pdf
+          ls -lh report.pdf
+
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: downloaded-pdf
+          path: report.pdf
